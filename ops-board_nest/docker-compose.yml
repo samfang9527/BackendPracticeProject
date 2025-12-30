@@ -1,0 +1,43 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ops-board-nest-app
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+      - DATABASE_USER=opsboard
+      - DATABASE_PASSWORD=opsboard123
+      - DATABASE_NAME=opsboard_nest
+    depends_on:
+      - db
+    networks:
+      - ops-board-nest-network
+
+  db:
+    image: postgres:17
+    container_name: ops-board-nest-db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=opsboard
+      - POSTGRES_PASSWORD=opsboard123
+      - POSTGRES_DB=opsboard_nest
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - ops-board-nest-network
+
+volumes:
+  postgres-data:
+
+networks:
+  ops-board-nest-network:
+    driver: bridge

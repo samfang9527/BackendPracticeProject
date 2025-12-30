@@ -1,0 +1,13 @@
+**/bin
+**/obj
+**/.vs
+**/.vscode
+**/*.user
+**/*.suo
+**/TestResults
+.git
+.gitignore
+.dockerignore
+README.md
+**/.env
+**/.env.local
